@@ -1,0 +1,40 @@
+.navbar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+
+.nav-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.nav-item {
+    margin-right: 50px;
+}
+
+.nav-item:last-child {
+    margin-right: 0;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s ease;
+    border-bottom: 3px solid transparent;
+    transition: all .55s ease;
+}
+
+.nav-item a.active {
+    color: #ff5733;
+    border-bottom: 3px solid #ff5733;
+}
+
+.nav-item a:hover {
+    border-bottom: 3px solid #ff5733;
+}

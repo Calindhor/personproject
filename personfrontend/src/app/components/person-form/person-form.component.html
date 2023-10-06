@@ -1,0 +1,23 @@
+<form class="add-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-control" [class.error]="form.get('firstName')?.invalid && formSubmitted">
+        <input type="text" formControlName="firstName" id="firstName" placeholder="Eesnimi" autocomplete="given-name"
+            oninput="this.value = this.value.toUpperCase()" />
+        <div class="error-message" *ngIf="form.get('firstName')?.hasError('required') && formSubmitted">
+            Eesnimi on kohustuslik.
+        </div>
+    </div>
+    <div class="form-control" [class.error]="form.get('lastName')?.invalid && formSubmitted">
+        <input type="text" formControlName="lastName" id="lastName" placeholder="Perenimi" autocomplete="family-name"
+            oninput="this.value = this.value.toUpperCase()" />
+        <div class="error-message" *ngIf="form.get('lastName')?.hasError('required') && formSubmitted">
+            Perenimi on kohustuslik.
+        </div>
+    </div>
+    <div class="form-control" [class.error]="form.get('address')?.invalid && formSubmitted">
+        <div id="InAadressDiv"></div>
+        <div class="error-message" *ngIf="form.get('address')?.hasError('required') && formSubmitted">
+            Aadress on kohustuslik.
+        </div>
+    </div>
+    <button type="submit" class="btn btn-block">Salvesta</button>
+</form>
