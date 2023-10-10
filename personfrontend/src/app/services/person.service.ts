@@ -14,7 +14,7 @@ const httpOptions = {
 })
 
 export class PersonService {
-  private apiUrl = 'http://localhost:8080/api/people'
+  private apiUrl = 'api/people'
 
   constructor(private http: HttpClient) { }
 

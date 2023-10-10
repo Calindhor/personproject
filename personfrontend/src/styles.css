@@ -46,15 +46,6 @@ body {
   transform: translate(-50%, -50%);
 }
 
-/* .add-form {
-  max-width: 450px;
-  width: 80%;
-  min-width: 250px;
-  position: relative;
-  margin: 0 auto;
-  margin-top: 20px;
-} */
-
 .form-control {
   margin: 10px 0;
 }
