@@ -1,3 +1,123 @@
-:host ::ng-deep .inads-result {
+.add-form {
+    max-width: 450px;
+    width: 80%;
+    min-width: 250px;
+    position: fixed;
+    margin: 0 auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.form-control {
+    position: relative;
+    margin: 10px 0;
+}
+
+.form-control label {
+    display: block;
+}
+
+.form-control input {
+    height: 33px;
     border: 1px solid #959595;
+    border-radius: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 7px;
+    outline: none;
+    font-size: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+
+.form-control input:focus {
+    border: 1px solid rgb(211, 223, 254);
+    box-shadow: 0 0 5px rgb(73, 125, 247);
+}
+
+.error-message {
+    color: red;
+    font-size: 13px;
+    margin-left: 2px;
+}
+
+.form-control.error input {
+    border: 1px solid red;
+}
+
+.form-control.error input:focus {
+    box-shadow: 0 0 5px red;
+}
+
+.form-control ul {
+    position: absolute;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: calc(100% - 2px);
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #959595;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    background-color: #ffffff;
+}
+
+.form-control ul li {
+    padding: 7px;
+    cursor: pointer;
+    border-top: 1px solid #959595;
+}
+
+.form-control ul li:first-child {
+    border-top: none;
+}
+
+.form-control ul li:hover {
+    background-color: #f2f2f2;
+}
+
+.clear-btn {
+    position: absolute;
+    right: 10px;
+    top: 16px;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid rgb(82, 75, 75);
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+.clear-btn::before,
+.clear-btn::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 1px;
+    background-color: rgb(82, 75, 75);
+}
+
+.clear-btn::before {
+    transform: rotate(45deg);
+}
+
+.clear-btn::after {
+    transform: rotate(-45deg);
+}
+
+.clear-btn:hover::before,
+.clear-btn:hover::after {
+    background-color: red;
+}
+
+.clear-btn:hover {
+    border-color: red;
 }

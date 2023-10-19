@@ -14,7 +14,13 @@
         </div>
     </div>
     <div class="form-control" [class.error]="form.get('address')?.invalid && formSubmitted">
-        <div id="InAadressDiv"></div>
+        <input #addressField type="text" [value]="selectedAddress" placeholder="Aadress" (input)="onInputChange(addressField.value)">
+        <button class="clear-btn" *ngIf="addressField.value.length > 0" (click)="clearInput(); addressField.value=''"></button>
+        <ul *ngIf="resultAddresses && resultAddresses.length > 0">
+            <li *ngFor="let result of resultAddresses" (click)="pickAddress(result.ipikkaadress)">
+                {{ result.ipikkaadress }}
+            </li>
+        </ul>
         <div class="error-message" *ngIf="form.get('address')?.hasError('required') && formSubmitted">
             Aadress on kohustuslik.
         </div>

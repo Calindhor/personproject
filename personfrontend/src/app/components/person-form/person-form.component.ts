@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Person } from '../../Person';
 import { PersonService } from '../../services/person.service';
+import { HttpClient } from '@angular/common/http';
+import { Subject, debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-person-form',
@@ -14,26 +16,46 @@ export class PersonFormComponent {
   form!: FormGroup;
   formSubmitted: boolean = false;
 
-  constructor(private personService: PersonService, private formBuilder: FormBuilder) { }
+  selectedAddress: string = '';
+  resultAddresses: any[] = [];
+  searchAddress = new Subject<string>();
+
+  constructor(private personService: PersonService, private formBuilder: FormBuilder, private http: HttpClient) { }
 
   ngOnInit() {
-    new InAadress({ "container": "InAadressDiv", "mode": 3, "ihist": "1993", "appartment": 0, "lang": "et" });
+    this.searchAddress.pipe(debounceTime(300)).subscribe(address => {
+      this.getData(address).subscribe((data: any) => {
+        this.resultAddresses = data.addresses;
+      });
+    });
 
     this.form = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       address: ['', Validators.required]
     })
+  }
 
-    document.addEventListener('addressSelected', (event: any) => {
-      var info = event.detail;
-      var address = info[0].aadress;
-      this.pickAddress(address);
-    });
+  getData(value: string) {
+    value = encodeURIComponent(value.trim());
+    const url = `http://inaadress.maaamet.ee/inaadress/gazetteer?address=${value}`;
+    return this.http.jsonp(url, 'callback');
+  }
 
-    document.querySelector('.inads-input-clear')!.addEventListener('click', () => {
-      this.clearAddress();
-    });
+  onInputChange(value: string) {
+    if (value.length > 2) {
+      this.searchAddress.next(value);
+    }
+    else if (value.length === 0) {
+      this.form.get('address')!.setValue('');
+      this.resultAddresses = [];
+    }
+  }
+
+  clearInput() {
+    this.selectedAddress = '';
+    this.resultAddresses = [];
+    this.form.get('address')!.setValue('');
   }
 
   onSubmit() {
@@ -42,8 +64,7 @@ export class PersonFormComponent {
       this.addPerson(newPerson);
 
       this.form.reset();
-      this.clearAddressField();
-
+      this.selectedAddress = '';
       this.formSubmitted = false;
     }
     else {
@@ -53,23 +74,8 @@ export class PersonFormComponent {
 
   pickAddress(address: any) {
     this.form.get('address')!.setValue(address);
-  }
-
-  clearAddress() {
-    if (this.form.get('address')!.value != '') {
-      this.form.get('address')!.setValue('');
-    }
-  }
-
-  clearAddressField() {
-    var addressInput = document.getElementById('InAadressDiv')!.querySelector('input');
-    if (addressInput) {
-      addressInput.value = '';
-    }
-
-    document.querySelectorAll('.inads-result > li ').forEach(e => e.remove());
-    document.querySelector('.inads-result')!.classList.add('hidden');
-    document.querySelector('.inads-input-clear')!.classList.add('hidden');
+    this.selectedAddress = address;
+    this.resultAddresses = [];
   }
 
   addPerson(person: Person) {
